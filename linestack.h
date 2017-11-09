@@ -7,7 +7,7 @@ template <class T>
 class LineStack
 {
 public:
-	LineStack();
+	LineStack(size_t size);
 	~LineStack();
 	bool isEmpty() const;
 	void push(T& value);
@@ -23,11 +23,11 @@ private:
 };
 
 template<class T>
-LineStack<T>::LineStack()
+LineStack<T>::LineStack(size_t size)
 {
 	m_size = 0;
-	array = new T[10];//default
-	m_capacity = 10;
+	array = new T[size];
+	m_capacity = size;
 }
 
 template<class T>
