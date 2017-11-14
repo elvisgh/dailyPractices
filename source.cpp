@@ -15,6 +15,8 @@ void josCicle()
 
 	std::cout << "cycle count = " << cycle.getCount() << std::endl;
 
+	cycle.moveNext();
+	std::cout << "begin from " << cycle.getCurrent()->m_data << " again!" << std::endl;
 	while (cycle.getCount() != 1)
 	{
 		for (int i = 0; i < 4; ++i)
@@ -22,6 +24,7 @@ void josCicle()
 			cycle.moveNext();
 		}
 		cycle.removeCurrent();
+		std::cout << cycle.getCount() << " elements left." << std::endl;
 	}
 
 	std::cout << cycle.getCurrent()->m_data << " left!!!" << std::endl;

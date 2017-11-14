@@ -58,12 +58,12 @@ void SingleCycleLink<T>::addTail(const T& value)
 template<class T>
 size_t SingleCycleLink<T>::getCount() const
 {
-	LinkNode<T>* ptr = m_head;
+	LinkNode<T>* ptr = m_head->m_link;
 	size_t count = 0;
-	while (ptr != m_tail)
+	while (ptr != m_head)
 	{
-		ptr = ptr->m_link;
 		++count;
+		ptr = ptr->m_link;
 	}
 
 	return count;
@@ -79,36 +79,32 @@ template<class T>
 void SingleCycleLink<T>::moveNext()
 {
 	m_current = m_current->m_link;
+	while (m_current == m_head)
+	{
+		m_current = m_current->m_link;
+	}
 	std::cout << "current move to " << m_current->m_data << std::endl;
 }
 
 template<class T>
 void SingleCycleLink<T>::removeCurrent()
 {
-	if (m_current == m_head)
+	LinkNode<T>* preCurrent = m_head;
+	LinkNode<T>* nodeCurrentDel = preCurrent->m_link;
+
+	while (nodeCurrentDel != m_current)
 	{
-		m_current = m_current->m_link;
+		preCurrent = preCurrent->m_link;
+		nodeCurrentDel = nodeCurrentDel->m_link;
 	}
 
-	LinkNode<T>* iterPtr = m_head;
-	while (1)
-	{
-		if (iterPtr->m_link == m_current)
-		{
-			iterPtr->m_link = m_current->m_link;
+	preCurrent->m_link = nodeCurrentDel->m_link;
+	moveNext();
 
-			LinkNode<T>* oldCur = m_current;
-			delete oldCur;
-			oldCur = nullptr;
+	std::cout << nodeCurrentDel->m_data << " out!!!" << std::endl;
+	delete nodeCurrentDel;
 
-			m_current = iterPtr->m_link;
-
-			std::cout << m_current->m_data << " out!!!" << std::endl;
-			return;
-		}
-
-		iterPtr = iterPtr->m_link;
-	}
+	std::cout << "begin from " << m_current->m_data << " again!" << std::endl;
 }
 
 #endif
