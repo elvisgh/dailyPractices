@@ -15,6 +15,7 @@ public:
 	LinkNode<T>* getCurrent() const;
 	void moveNext();
 	void removeCurrent();
+	void removeAll();
 
 private:
 	LinkNode<T>* m_head;
@@ -34,14 +35,13 @@ SingleCycleLink<T>::SingleCycleLink()
 template<class T>
 SingleCycleLink<T>::~SingleCycleLink()
 {
-	delete m_head;
-	m_head = nullptr;
-		
-	delete m_tail;
-	m_tail = nullptr;
+	removeAll();
 
-	delete m_current;
-	m_current = nullptr;
+	if (m_head != nullptr)
+	{
+		delete m_head;
+		m_head = nullptr;
+	}
 }
 
 template<class T>
@@ -90,21 +90,39 @@ template<class T>
 void SingleCycleLink<T>::removeCurrent()
 {
 	LinkNode<T>* preCurrent = m_head;
-	LinkNode<T>* nodeCurrentDel = preCurrent->m_link;
+	LinkNode<T>* nodeCurrentDel = m_current;
 
-	while (nodeCurrentDel != m_current)
+	while (preCurrent->m_link != m_current)
 	{
 		preCurrent = preCurrent->m_link;
-		nodeCurrentDel = nodeCurrentDel->m_link;
 	}
 
-	preCurrent->m_link = nodeCurrentDel->m_link;
-	moveNext();
+	preCurrent->m_link = m_current->m_link;
 
+	m_current = preCurrent->m_link;
+	while (m_current == m_head)
+	{
+		m_current = m_current->m_link;
+	}
+	
 	std::cout << nodeCurrentDel->m_data << " out!!!" << std::endl;
 	delete nodeCurrentDel;
+	nodeCurrentDel = nullptr;
 
 	std::cout << "begin from " << m_current->m_data << " again!" << std::endl;
+}
+
+template<class T>
+void SingleCycleLink<T>::removeAll()
+{
+	m_current = m_head->m_link;
+	int length = getCount();
+
+	for (int i = 0; i < length; ++i)
+	{
+		removeCurrent();
+	}
+	m_current = m_head;
 }
 
 #endif
