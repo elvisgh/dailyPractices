@@ -13,6 +13,7 @@ public:
 	void addTail(const T& value);
 	size_t getCount() const;
 	LinkNode<T>* getCurrent() const;
+	LinkNode<T>* getTail() const;
 	void moveNext();
 	void removeCurrent();
 	void removeAll();
@@ -73,6 +74,12 @@ template<class T>
 LinkNode<T>* SingleCycleLink<T>::getCurrent() const
 {
 	return m_current;
+}
+
+template<class T>
+LinkNode<T>* SingleCycleLink<T>::getTail() const
+{
+	return m_tail;
 }
 
 template<class T>

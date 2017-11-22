@@ -1,8 +1,28 @@
 #include <iostream>
 
-#include "linkstack.h"
+#include "iterator.h"
 #include "linestack.h"
+#include "linkstack.h"
 #include "singlecyclelink.h"
+
+void testIterator()
+{
+	SingleCycleLink<int> cycle;
+	
+	for (int i = 0; i < 15; ++i)
+	{
+		cycle.addTail(i);
+	}
+
+	cycle.moveNext();
+	Iterator<int> iter = cycle.getCurrent();
+
+	while(iter != cycle.getTail())
+	{
+		++iter;
+		std::cout << iter.getCurrent()->m_data << " ";
+	}
+}
 
 void josCicle()
 {
@@ -85,7 +105,9 @@ int main()
 	//testLinkStack();
 	//testLineStack();
 
-	josCicle();
+	//josCicle();
+
+	testIterator();
 
 	system("pause");
 	return 0;
