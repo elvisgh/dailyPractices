@@ -68,14 +68,14 @@ void LineStack<T>::push(T& value)
 template<class T>
 void LineStack<T>::pop()
 {
-	assert (NULL != m_size);
+	assert (0 != m_size);
 	--m_size;
 }
 
 template<class T>
 T& LineStack<T>::getTop() const
 {
-	assert (NULL != m_size);
+	assert (0 != m_size);
 	return array[m_size];
 }
 

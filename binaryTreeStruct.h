@@ -1,10 +1,8 @@
-#ifndef _BINARY_TREE_H_
-#define _BINARY_TREE_H_
+#ifndef _BINARYTREE_H_
+#define _BINARYTREE_H_
 
 #include <iostream>
 
-namespace binaryTree
-{
 template <class T>
 class BinaryTreeNode
 {
@@ -54,10 +52,10 @@ public:
 
 };
 
-template <class T>
-BinaryTreeNode<T> *createBinaryTree(BinaryTreeNode<T> *p)
+template <typename T>
+void createBinaryTree(BinaryTreeNode<T> *p)
 {
-	T ch;
+	char ch;
 	std::cin >> ch;
 	if(ch == '#')
 	{
@@ -67,12 +65,22 @@ BinaryTreeNode<T> *createBinaryTree(BinaryTreeNode<T> *p)
 	{
 		p = new BinaryTreeNode<T>();
 		p->setData(ch);
-		createBinaryTree(p-getLeftChild());
-		createBinaryTree(p-getRightChild());
+		createBinaryTree(p->getLeftChild());
+		createBinaryTree(p->getRightChild());
 	}
-
-	return p;
-};
 }
+
+template <typename T>
+void preTravel(BinaryTreeNode<T> *p)
+{
+    std::cout << "PreTravel..." << std::endl;
+	if (NULL != p)
+	{
+		std::cout << p->getData() << " ";
+		preTravel(p->getLeftChild());
+		preTravel(p->getRightChild());
+	}
+}
+
 
 #endif
