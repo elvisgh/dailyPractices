@@ -4,8 +4,8 @@
 
 int main()
 {
-	BinaryTreeNode<int> *p;
-	createBinaryTree(p);
+	BinaryTreeNode<char> *p;
+	createBinaryTree(&p);
 	preTravel(p);
 
 	return 0;

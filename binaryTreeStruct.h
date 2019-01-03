@@ -12,7 +12,7 @@ private:
 	BinaryTreeNode<T> *m_rightChild;
 
 public:
-	BinaryTreeNode():m_leftChild(NULL),m_rightChild(NULL){};
+	BinaryTreeNode(){};
 	BinaryTreeNode(const T& data,  BinaryTreeNode<T>* leftChild, BinaryTreeNode<T>* rightChild)
 	{
 		m_data = data;
@@ -53,30 +53,34 @@ public:
 };
 
 template <typename T>
-void createBinaryTree(BinaryTreeNode<T> *p)
+void createBinaryTree(BinaryTreeNode<T> **p)
 {
 	char ch;
 	std::cin >> ch;
 	if(ch == '#')
 	{
-		p = NULL;
+		(*p) = NULL;
 	}
 	else
 	{
-		p = new BinaryTreeNode<T>();
-		p->setData(ch);
-		createBinaryTree(p->getLeftChild());
-		createBinaryTree(p->getRightChild());
+		(*p) = new BinaryTreeNode<T>();
+		std::cout << *p << std::endl;
+		(*p)->setData(ch);
+		BinaryTreeNode<T> *left, *right;
+		(*p)->setLeftChild(left);
+		(*p)->setRightChild(right);
+		createBinaryTree(&left);
+		createBinaryTree(&right);
 	}
 }
 
 template <typename T>
 void preTravel(BinaryTreeNode<T> *p)
 {
-    std::cout << "PreTravel..." << std::endl;
 	if (NULL != p)
 	{
-		std::cout << p->getData() << " ";
+		std::cout << p << " " << p->getData() << std::endl;
+		std::cout << p->getLeftChild() << std::endl;
 		preTravel(p->getLeftChild());
 		preTravel(p->getRightChild());
 	}
