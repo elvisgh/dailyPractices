@@ -53,24 +53,24 @@ public:
 };
 
 template <typename T>
-void createBinaryTree(BinaryTreeNode<T> **p)
+void createBinaryTree(BinaryTreeNode<T> *p)
 {
 	char ch;
 	std::cin >> ch;
 	if(ch == '#')
 	{
-		(*p) = NULL;
+		p = NULL;
 	}
 	else
 	{
-		(*p) = new BinaryTreeNode<T>();
-		std::cout << *p << std::endl;
-		(*p)->setData(ch);
-		BinaryTreeNode<T> *left, *right;
-		(*p)->setLeftChild(left);
-		(*p)->setRightChild(right);
-		createBinaryTree(&left);
-		createBinaryTree(&right);
+		p->setData(ch);
+		BinaryTreeNode<T> *left = new BinaryTreeNode<T>();
+		BinaryTreeNode<T> *right = new BinaryTreeNode<T>();
+        
+		p->setLeftChild(left);
+		p->setRightChild(right);
+		createBinaryTree(left);
+		createBinaryTree(right);
 	}
 }
 
@@ -79,8 +79,7 @@ void preTravel(BinaryTreeNode<T> *p)
 {
 	if (NULL != p)
 	{
-		std::cout << p << " " << p->getData() << std::endl;
-		std::cout << p->getLeftChild() << std::endl;
+		std::cout << p->getData() << " ";
 		preTravel(p->getLeftChild());
 		preTravel(p->getRightChild());
 	}
